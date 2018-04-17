@@ -65,9 +65,9 @@ export class LoginPage {
       this.loading.dismiss();
       console.log(result);
       this.navCtrl.setRoot(HomePage)
-    }, (err) => {
+    }).catch(error => {
       this.loading.dismiss();
-      console.log(err)
+      console.log(error)
     })
   }
 
