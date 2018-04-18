@@ -63,7 +63,6 @@ export class LoginPage {
 
     this.authProvider.login(credentials).then((result) => {
       this.loading.dismiss();
-      console.log(result);
       this.navCtrl.setRoot(HomePage)
     }).catch(error => {
       this.loading.dismiss();
