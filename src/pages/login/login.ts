@@ -48,10 +48,10 @@ export class LoginPage {
       console.log("Already authorized");
       this.loading.dismiss();
       this.navCtrl.setRoot(HomePage); 
-    }), (err) => {
-      console.log("Not already authorized");
+    }).catch (error => {
+      console.log("Not already abc authorized");
       this.loading.dismiss();
-    }
+    })
   }
 
   login(){
@@ -79,5 +79,4 @@ export class LoginPage {
     this.loading = this.loadingCtrl.create()
     this.loading.present();
   }
-
 }

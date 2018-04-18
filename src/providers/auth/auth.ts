@@ -2,7 +2,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 // import { Headers } from '@angular/http';
-import 'rxjs/add/operator/map';
+// import 'rxjs/add/operator/map';
+// import { Observable } from 'rxjs/Rx';
+// import { HttpErrorResponse } from '@angular/common/http/src/response';
+// import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
+// import { errorHandler } from '@angular/platform-browser/src/browser';
 
 /*
   Generated class for the AuthProvider provider.
@@ -37,14 +41,16 @@ export class AuthProvider {
         headers.append('Authorization', this.token);
 
         this.http.get('https://a-project-ada.herokuapp.com/api/auth/protected', httpOptions)
-          .subscribe(res => {
+        .subscribe(res => {
             resolve(res);
-          }), (err) => {
+          }, (err) => {
             reject(err);
-          }
+          });
+
+        })
       })
-    })
-  }
+    }
+  
 
   createAccount(details){
     return new Promise((resolve,reject) => {
@@ -93,4 +99,17 @@ export class AuthProvider {
   logout(){
     this.storage.set('token', '');
   } 
+
+  // private handleError(error: HttpErrorResponse) {
+  //   if (error.error instanceof ErrorEvent){
+  //     console.error('An error has occured', error.error.message)
+  //   } else {
+  //     console.error(
+  //     `Backend returned code ${error.status}, ` +
+  //     `body was: ${error.error}`);
+  //   }
+  //   return new ErrorObservable(
+  //     'Something bad happened'
+  //   )
+  // }
 }
