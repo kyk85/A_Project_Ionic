@@ -7,12 +7,26 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>signup</ion-title>
+    <ion-title>Create Account</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+    <ion-list no-lines>
+      <form [formGroup]="signupForm">
+        <ion-item>
+            <ion-label floating>Email</ion-label>
+            <ion-input formControlName="email" type="text"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>Password</ion-label>
+            <ion-input formControlName="password" type="password"></ion-input>
+        </ion-item>
+      </form>
+    </ion-list> 
+  
+    <button ion-button full color="primary" (click)="signup()">Create Account!</button>
 
 </ion-content>
