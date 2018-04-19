@@ -18,8 +18,4 @@ export class HomePage {
 
   }
 
-  logout(){
-    this.authProvider.logout();
-    this.navCtrl.setRoot(LoginPage);
-  }
 }

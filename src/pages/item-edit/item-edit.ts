@@ -2,16 +2,13 @@ import { Component } from '@angular/core';
 import { IonicPage, ViewController, NavController, LoadingController, NavParams } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { AuthProvider } from '../../providers/auth/auth';
 import { CollectionProvider } from '../../providers/collection/collection';
-import { HomePage } from '../home/home';
 import { CollectionPage } from '../collection/collection';
-
 import { Storage } from '@ionic/storage';
 
 
 /**
- * Generated class for the ItemCreatePage page.
+ * Generated class for the ItemEditPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -19,50 +16,53 @@ import { Storage } from '@ionic/storage';
 
 @IonicPage()
 @Component({
-  selector: 'page-item-create',
-  templateUrl: 'item-create.html',
+  selector: 'page-item-edit',
+  templateUrl: 'item-edit.html',
 })
-export class ItemCreatePage {
+export class ItemEditPage {
 
-  addItemForm: FormGroup;
+  editedItem: any;
+  editForm: FormGroup;
   loading: any;
   userId: any;
 
   constructor(public navCtrl: NavController, 
-      public navParams: NavParams,
-      public formBuilder: FormBuilder,
-      public authProvider: AuthProvider,
-      public collectionProvider: CollectionProvider,
-      public viewCtrl: ViewController,
-      public loadingCtrl: LoadingController,
-      public storage: Storage) {
+              public navParams: NavParams,
+              public loadingCtrl: LoadingController,
+              public formBuilder: FormBuilder,
+              public collectionProvider: CollectionProvider,
+              public storage: Storage) {
 
-        this.addItemForm = this.formBuilder.group({
-          coverArt:[''],
-          title:[''],
-          author:[''],
-          isbn:[''],
-        })
+                this.editForm = this.formBuilder.group({
+                  coverArt:[''],
+                  title:[''],
+                  author:[''],
+                  isbn:[''],
+                })
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ItemCreatePage');
+    console.log('ionViewDidLoad ItemEditPage');
+    this.editedItem = this.navParams.get('item')
+    console.log(this.editedItem)
+    
   }
 
-  addItem(){
+  editItem(){
     this.showLoader();
 
     this.storage.get('userId').then((value)=>{
       this.userId = value
-      let details = this.addItemForm.value
+      let details = this.editForm.value
+      let bookId = this.editedItem._id
       // details.owner = this.userId
       console.log(details)
 
-      this.collectionProvider.addItem(this.userId, details).then((result)=>{
+      this.collectionProvider.editItem(this.userId, bookId, details).then((result)=>{
         this.loading.dismiss();
         
         // this.viewCtrl.dismiss();    
-        console.log(details.title + " added!")
+        console.log(details.title + " edited!")
         console.log(result)
         this.navCtrl.push(CollectionPage)
       }).catch(error=>{
@@ -77,7 +77,7 @@ export class ItemCreatePage {
     // console.log(details)
 
   }
-  
+
   showLoader(){
     this.loading = this.loadingCtrl.create()
     this.loading.present();

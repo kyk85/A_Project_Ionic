@@ -24,7 +24,7 @@ export class CollectionProvider {
     console.log('Hello CollectionProvider Provider');
   }
 
-  getCollection(){
+  getCollection(userId){
     return new Promise ((resolve,reject)=>{
       const httpOptions = {
         headers: new HttpHeaders({
@@ -32,7 +32,7 @@ export class CollectionProvider {
         })
       }
 
-      this.http.get('https://a-project-ada.herokuapp.com/api/book/', httpOptions)
+      this.http.get('https://a-project-ada.herokuapp.com/api/book/' + userId, httpOptions)
         .subscribe(data=>{
           resolve(data);
         },(err) =>{
@@ -42,7 +42,7 @@ export class CollectionProvider {
     })
   }
 
-  addItem(item){
+  addItem(userId, item){
     return new Promise((resolve,reject)=>{
       const httpOptions = {
         headers: new HttpHeaders({
@@ -51,7 +51,7 @@ export class CollectionProvider {
         })
       }
       
-      this.http.post('https://a-project-ada.herokuapp.com/api/book/', JSON.stringify(item), httpOptions)
+      this.http.post('https://a-project-ada.herokuapp.com/api/book/' + userId, JSON.stringify(item), httpOptions)
         .subscribe(res =>{
           resolve(res);
         }, (err) =>{
@@ -60,7 +60,26 @@ export class CollectionProvider {
     })
   }
 
-  deleteItem(id){
+  editItem(userId, bookId, item){
+    return new Promise((resolve,reject)=>{
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': this.authProvider.token
+        })
+      }
+      
+      this.http.post('https://a-project-ada.herokuapp.com/api/book/' + userId + '/' + bookId, JSON.stringify(item), httpOptions)
+        .subscribe(res =>{
+          resolve(res);
+        }, (err) =>{
+          reject(err)
+        })
+    })
+  }
+
+
+  deleteItem(userId, bookId){
     return new Promise((resolve,reject)=>{
 
       const httpOptions = {
@@ -69,7 +88,7 @@ export class CollectionProvider {
         })
       }
 
-      this.http.delete('https://a-project-ada.herokuapp.com/api/book/' + id, httpOptions)
+      this.http.delete('https://a-project-ada.herokuapp.com/api/book/' + userId + '/' + bookId, httpOptions)
       .subscribe((res)=>{
         resolve(res)
       }, (err)=>{

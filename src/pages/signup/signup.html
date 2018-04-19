@@ -17,6 +17,10 @@
     <ion-list no-lines>
       <form [formGroup]="signupForm">
         <ion-item>
+            <ion-label floating>Display Name</ion-label>
+            <ion-input formControlName="displayName" type="text"></ion-input>
+        </ion-item>
+        <ion-item>
             <ion-label floating>Email</ion-label>
             <ion-input formControlName="email" type="text"></ion-input>
         </ion-item>

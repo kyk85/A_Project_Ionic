@@ -18,6 +18,7 @@ import { Storage } from '@ionic/storage';
 export class AuthProvider {
 
   public token: any;
+  public userId: any;
 
   constructor(public http: HttpClient, public storage: Storage) {
     console.log('Hello AuthProvider Provider');
@@ -66,7 +67,10 @@ export class AuthProvider {
         .subscribe(res => {
           let data = res
           this.token = data['token'];
+          this.userId = data['user']._id;
+          console.log(this.userId)
           this.storage.set('token', data['token']);
+          this.storage.set('userId', data['user']._id)
           resolve(data);
         }, (err) => {
           reject(err);
@@ -87,7 +91,9 @@ export class AuthProvider {
         .subscribe(res => {
           let data = res
           this.token = data['token'];
+          this.userId = data['user']._id;
           this.storage.set('token', data['token']);
+          this.storage.set('userId', data['user']._id)
           resolve(data);
           resolve(res);
         }, (err) => {
@@ -98,6 +104,8 @@ export class AuthProvider {
 
   logout(){
     this.storage.set('token', '');
+    this.storage.set('userId', '');
+
   } 
 
   // private handleError(error: HttpErrorResponse) {

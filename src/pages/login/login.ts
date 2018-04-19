@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthProvider } from '../../providers/auth/auth';
 import { HomePage } from '../home/home';
 import { SignupPage } from '../signup/signup';
+import { CollectionPage } from '../collection/collection';
 
 /**
  * Generated class for the LoginPage page.
@@ -47,7 +48,7 @@ export class LoginPage {
     this.authProvider.checkAuthentication().then((res)=>{
       console.log("Already authorized");
       this.loading.dismiss();
-      this.navCtrl.setRoot(HomePage); 
+      this.navCtrl.setRoot(CollectionPage); 
     }).catch (error => {
       console.log("Not already abc authorized");
       this.loading.dismiss();
@@ -63,7 +64,7 @@ export class LoginPage {
 
     this.authProvider.login(credentials).then((result) => {
       this.loading.dismiss();
-      this.navCtrl.setRoot(HomePage)
+      this.navCtrl.setRoot(CollectionPage)
     }).catch(error => {
       this.loading.dismiss();
       console.log(error)

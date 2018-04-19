@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Alert } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 
 // Controller Imports
 import { ModalController, AlertController, LoadingController } from 'ionic-angular';
@@ -7,10 +8,14 @@ import { ModalController, AlertController, LoadingController } from 'ionic-angul
 // Page Imports
 import { LoginPage } from '../login/login';
 import { ItemCreatePage } from '../item-create/item-create';
+import { ItemDetailsPage } from '../item-details/item-details';
 
 // Provider Imports
 import { AuthProvider } from '../../providers/auth/auth';
 import { CollectionProvider } from '../../providers/collection/collection';
+
+
+
 
 /**
  * Generated class for the CollectionPage page.
@@ -28,6 +33,7 @@ export class CollectionPage {
 
   collectionItems: any;
   loading: any;
+  userId: any;
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
@@ -35,33 +41,46 @@ export class CollectionPage {
               public alertCtrl: AlertController,
               public loadingCtrl: LoadingController,
               public authProvider: AuthProvider,
-              public collectionProvider: CollectionProvider) {
+              public collectionProvider: CollectionProvider,
+              public storage: Storage) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CollectionPage');
-    
+
     this.showLoader();
 
-    this.collectionProvider.getCollection().then((data)=>{
-      this.collectionItems = data;
-      console.log(this.collectionItems)
-      this.loading.dismiss();
-    }).catch(error=>{
-      console.log("Not Authorized")
+    this.storage.get('userId').then((value) =>{
+      this.userId = value
+      this.collectionProvider.getCollection(value).then((data)=>{
+        this.collectionItems = data['library'];
+        console.log(this.collectionItems)
+        this.loading.dismiss();
+      }).catch(error=>{
+        console.log("Not Authorized")
+      })
+
     })
+    
   }
 
   goToItemCreate(){
     this.navCtrl.push(ItemCreatePage);
   }
 
+  goToItemDetails(item){
+    this.navCtrl.push(ItemDetailsPage, {collectionItem:item});
+  }
+
+
   deleteItem(item){
     this.showLoader();
 
     console.log(item._id)
 
-    this.collectionProvider.deleteItem(item._id).then((result)=>{
+    
+
+    this.collectionProvider.deleteItem(this.userId, item._id).then((result)=>{
       this.loading.dismiss();
 
       let index = this.collectionItems.indexOf(item)

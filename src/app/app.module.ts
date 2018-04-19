@@ -13,6 +13,8 @@ import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
 import { CollectionPage } from '../pages/collection/collection';
 import { ItemCreatePage } from '../pages/item-create/item-create';
+import { ItemDetailsPage } from '../pages/item-details/item-details';
+import { ItemEditPage } from '../pages/item-edit/item-edit';
 
 // Module Imports
 // import { Storage } from '@ionic/storage';
@@ -30,7 +32,9 @@ import { AuthProvider } from '../providers/auth/auth';
     LoginPage,
     SignupPage,
     CollectionPage,
-    ItemCreatePage
+    ItemCreatePage,
+    ItemDetailsPage,
+    ItemEditPage
   ],
   imports: [
     BrowserModule,
@@ -45,7 +49,9 @@ import { AuthProvider } from '../providers/auth/auth';
     LoginPage,
     SignupPage,
     CollectionPage,
-    ItemCreatePage
+    ItemCreatePage,
+    ItemDetailsPage,
+    ItemEditPage
   ],
   providers: [
     StatusBar,

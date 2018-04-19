@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AuthProvider } from '../../providers/auth/auth';
 import { HomePage } from '../home/home';
+import { CollectionPage } from '../collection/collection';
 
 /**
  * Generated class for the SignupPage page.
@@ -31,6 +32,7 @@ export class SignupPage {
     public loadingCtrl: LoadingController) {
 
       this.signupForm = this.formBuilder.group({
+        displayName:[''],
         email:[''],
         password:['']
       });
@@ -47,7 +49,7 @@ export class SignupPage {
 
     this.authProvider.createAccount(details).then((result)=>{
       this.loading.dismiss();
-      this.navCtrl.setRoot(HomePage);
+      this.navCtrl.setRoot(CollectionPage);
     }).catch (error => {
       this.loading.dismiss();
     })
