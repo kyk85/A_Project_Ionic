@@ -24,9 +24,19 @@
             <ion-label floating>Email</ion-label>
             <ion-input formControlName="email" type="text"></ion-input>
         </ion-item>
+        <ion-item class="error-message" *ngIf="!signupForm.controls.email.valid && signupForm.controls.email.dirty">
+            <p>Please enter a valid email.</p>
+        </ion-item>
         <ion-item>
             <ion-label floating>Password</ion-label>
-            <ion-input formControlName="password" type="password"></ion-input>
+            <ion-input formControlName="password" type="text"></ion-input>
+        </ion-item>
+        <ion-item class="error-message" *ngIf="!signupForm.controls.password.valid && signupForm.controls.password.dirty">
+            <p>Please input a valid password. Passwords require the following:</p>
+            <p>1. One Uppercase character</p>
+            <p>2. One Lowercase character</p>
+            <p>3. One number</p>
+            <p>4. 8 characters</p>
         </ion-item>
       </form>
     </ion-list> 

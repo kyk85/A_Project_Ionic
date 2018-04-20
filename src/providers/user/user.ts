@@ -36,4 +36,22 @@ export class UserProvider {
     })
   }
 
+  editProfile(userId, editedUser){
+    return new Promise((resolve,reject)=>{
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': this.authProvider.token
+        })
+      }
+      
+      this.http.post('https://a-project-ada.herokuapp.com/api/user/' + userId, JSON.stringify(editedUser), httpOptions)
+        .subscribe(res =>{
+          resolve(res);
+        }, (err) =>{
+          reject(err)
+        })
+    })
+  }
+
 }

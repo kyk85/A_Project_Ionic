@@ -55,15 +55,12 @@ export class ItemEditPage {
       this.userId = value
       let details = this.editForm.value
       let bookId = this.editedItem._id
-      // details.owner = this.userId
       console.log(details)
 
       this.collectionProvider.editItem(this.userId, bookId, details).then((result)=>{
         this.loading.dismiss();
-        
-        // this.viewCtrl.dismiss();    
         console.log(details.title + " edited!")
-        console.log(result)
+        // console.log(result)
         this.navCtrl.setRoot(CollectionPage)
       }).catch(error=>{
         this.loading.dismiss();

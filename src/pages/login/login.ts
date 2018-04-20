@@ -42,8 +42,8 @@ export class LoginPage {
       public events: Events) {
 
         this.loginForm = this.formBuilder.group({
-          email:[''],
-          password:['']
+          email:['',Validators.compose([Validators.maxLength(70), Validators.pattern('^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$'), Validators.required])],
+          password:['',Validators.compose([Validators.pattern("(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"), Validators.required])]
         });
   }
 
@@ -52,13 +52,17 @@ export class LoginPage {
 
     this.showLoader();
 
+    this.checkAuthentication();
+  }
+
+  checkAuthentication(){
     this.authProvider.checkAuthentication().then((res)=>{
-      console.log("Already authorized");
-      this.storage.get('userId').then((value)=>{
-        this.userProvider.getProfile(value).then((result)=>{
-          var user = result
-          console.log(user)
-          this.events.publish('user:alreadyLogin', user)
+    console.log("Already authorized");
+    this.storage.get('userId').then((value)=>{
+      this.userProvider.getProfile(value).then((result)=>{
+        var user = result
+        console.log(user)
+        this.events.publish('user:alreadyLogin', user)
         })
       })
       this.loading.dismiss();

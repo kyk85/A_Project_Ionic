@@ -15,6 +15,8 @@ import { CollectionPage } from '../pages/collection/collection';
 import { ItemCreatePage } from '../pages/item-create/item-create';
 import { ItemDetailsPage } from '../pages/item-details/item-details';
 import { ItemEditPage } from '../pages/item-edit/item-edit';
+import { ProfileEditPage } from '../pages/profile-edit/profile-edit';
+import { ProfileDetailsPage } from '../pages/profile-details/profile-details';
 
 // Module Imports
 // import { Storage } from '@ionic/storage';
@@ -35,7 +37,9 @@ import { UserProvider } from '../providers/user/user';
     CollectionPage,
     ItemCreatePage,
     ItemDetailsPage,
-    ItemEditPage
+    ItemEditPage,
+    ProfileDetailsPage,
+    ProfileEditPage
   ],
   imports: [
     BrowserModule,
@@ -52,7 +56,9 @@ import { UserProvider } from '../providers/user/user';
     CollectionPage,
     ItemCreatePage,
     ItemDetailsPage,
-    ItemEditPage
+    ItemEditPage,
+    ProfileDetailsPage,
+    ProfileEditPage
   ],
   providers: [
     StatusBar,

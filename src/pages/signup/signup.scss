@@ -1,3 +1,15 @@
 page-signup {
-
+    
+    .error-message {
+        min-height: 2.2rem;
+        p {
+            font-size: 60%;
+        }
+        ion-label {
+            margin: 2px 0;
+        }
+        .item-inner {
+            border-bottom: 0 !important;
+        }
+    }
 }

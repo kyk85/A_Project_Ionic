@@ -25,6 +25,7 @@
 
 
 <ion-content padding>
+  <p *ngIf="collectionItems?.length == 0">You have no books in your collection!</p>
   <ion-list>
     <ion-item-sliding *ngFor="let collectionItem of collectionItems">
       <ion-item (click)="goToItemDetails(collectionItem)">

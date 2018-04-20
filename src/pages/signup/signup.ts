@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, LoadingController, NavParams } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Events } from 'ionic-angular';
 
 import { AuthProvider } from '../../providers/auth/auth';
 import { HomePage } from '../home/home';
@@ -26,16 +27,17 @@ export class SignupPage {
 
 
   constructor(public navCtrl: NavController, 
-    public navParams: NavParams,
-    public formBuilder: FormBuilder,
-    public authProvider: AuthProvider,
-    public loadingCtrl: LoadingController) {
+              public navParams: NavParams,
+              public formBuilder: FormBuilder,
+              public authProvider: AuthProvider,
+              public loadingCtrl: LoadingController,
+              public events: Events) {
 
       this.signupForm = this.formBuilder.group({
         displayName:[''],
-        email:[''],
-        password:['']
-      });
+        email:['',Validators.compose([Validators.maxLength(70), Validators.pattern('^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$'), Validators.required])],
+        password:['',Validators.compose([Validators.pattern('(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}'), Validators.required])]
+    });
 }
 
   ionViewDidLoad() {
@@ -50,6 +52,10 @@ export class SignupPage {
     this.authProvider.createAccount(details).then((result)=>{
       this.loading.dismiss();
       this.navCtrl.setRoot(CollectionPage);
+      var user = result['user']
+      console.log(user)
+      this.events.publish('user:signup', user)
+
     }).catch (error => {
       this.loading.dismiss();
     })

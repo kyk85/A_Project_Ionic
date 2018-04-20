@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ItemEditPage } from '../item-edit/item-edit';
-import { PACKAGE_ROOT_URL } from '@angular/core/src/application_tokens';
 
 /**
  * Generated class for the ItemDetailsPage page.
@@ -28,13 +27,9 @@ export class ItemDetailsPage {
     console.log(this.viewedItem)
   }
 
-  ionViewWillEnter(){
-    
-  }
-
   editDetails(item){
     this.navCtrl.push(ItemEditPage, {item:this.viewedItem})
-    console.log(item)
+    // console.log(item)
   }
 
 }

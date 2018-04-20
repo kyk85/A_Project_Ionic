@@ -7,8 +7,10 @@ import { Events } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
 // Page Imports
+import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { CollectionPage } from '../pages/collection/collection';
+import { ProfileDetailsPage } from '../pages/profile-details/profile-details';
 
 // Provider Imports
 import { AuthProvider } from '../providers/auth/auth';
@@ -45,9 +47,20 @@ export class MyApp {
     console.log(this.user)
   })
 
+  events.subscribe('user:signup', (user)=>{
+    this.user = user;
+    console.log(this.user)
+  })
+
+  events.subscribe('user:edited', (user)=>{
+    this.user = user;
+    console.log(this.user)
+  })
+
   // used for an example of ngFor and navigation
   this.pages = [
     // { title: 'Home', component: HomePage },
+    { title: 'Profile', component: ProfileDetailsPage },
     { title: 'Collection', component: CollectionPage }
   ];
 
