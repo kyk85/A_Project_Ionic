@@ -6,7 +6,17 @@
   </ion-header>
 
   <ion-content>
+    <ion-item>
+      <ion-thumbnail>
+        <img src="{{user?.displayPic}}" alt=""> 
+      </ion-thumbnail>
+      <p>Logged in as:</p> 
+      <p>{{user?.displayName}}</p>
+    </ion-item>
     <ion-list>
+      <button menuClose ion-item (click)="getProfile()">
+        EDIT
+      </button>
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
         {{p.title}}
       </button>

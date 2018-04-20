@@ -1,9 +1,13 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, LoadingController, NavParams } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Events } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
+
 
 import { AuthProvider } from '../../providers/auth/auth';
-import { HomePage } from '../home/home';
+import { UserProvider } from '../../providers/user/user';
+
 import { SignupPage } from '../signup/signup';
 import { CollectionPage } from '../collection/collection';
 
@@ -32,7 +36,10 @@ export class LoginPage {
       public navParams: NavParams,
       public formBuilder: FormBuilder,
       public authProvider: AuthProvider,
-      public loadingCtrl: LoadingController) {
+      public userProvider: UserProvider,
+      public loadingCtrl: LoadingController,
+      public storage: Storage,
+      public events: Events) {
 
         this.loginForm = this.formBuilder.group({
           email:[''],
@@ -47,6 +54,13 @@ export class LoginPage {
 
     this.authProvider.checkAuthentication().then((res)=>{
       console.log("Already authorized");
+      this.storage.get('userId').then((value)=>{
+        this.userProvider.getProfile(value).then((result)=>{
+          var user = result
+          console.log(user)
+          this.events.publish('user:alreadyLogin', user)
+        })
+      })
       this.loading.dismiss();
       this.navCtrl.setRoot(CollectionPage); 
     }).catch (error => {
@@ -65,6 +79,9 @@ export class LoginPage {
     this.authProvider.login(credentials).then((result) => {
       this.loading.dismiss();
       this.navCtrl.setRoot(CollectionPage)
+
+      var user = result['user']
+      this.events.publish('user:login', user)
     }).catch(error => {
       this.loading.dismiss();
       console.log(error)

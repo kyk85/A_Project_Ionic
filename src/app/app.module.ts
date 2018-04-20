@@ -24,6 +24,7 @@ import { IonicStorageModule } from '@ionic/storage';
 // Provider Imports
 import { CollectionProvider } from '../providers/collection/collection';
 import { AuthProvider } from '../providers/auth/auth';
+import { UserProvider } from '../providers/user/user';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { AuthProvider } from '../providers/auth/auth';
     SplashScreen,
     CollectionProvider,
     AuthProvider,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    UserProvider
   ]
 })
 export class AppModule {}

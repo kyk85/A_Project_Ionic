@@ -17,5 +17,4 @@ export class HomePage {
       public authProvider:AuthProvider) {
 
   }
-
 }

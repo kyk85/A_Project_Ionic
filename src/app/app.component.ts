@@ -2,8 +2,9 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { Events } from 'ionic-angular';
 
-import { HomePage } from '../pages/home/home';
+import { Storage } from '@ionic/storage';
 
 // Page Imports
 import { LoginPage } from '../pages/login/login';
@@ -11,6 +12,7 @@ import { CollectionPage } from '../pages/collection/collection';
 
 // Provider Imports
 import { AuthProvider } from '../providers/auth/auth';
+import { UserProvider } from '../providers/user/user';
 
 @Component({
   templateUrl: 'app.html'
@@ -22,17 +24,32 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>;
 
+  user: any;
+
   constructor(public platform: Platform, 
               public statusBar: StatusBar, 
               public splashScreen: SplashScreen,
-              public authProvider: AuthProvider) {
-    this.initializeApp();
+              public authProvider: AuthProvider,
+              public userProvider: UserProvider,
+              public storage: Storage,
+              public events: Events) {
 
-    // used for an example of ngFor and navigation
-    this.pages = [
-      // { title: 'Home', component: HomePage },
-      { title: 'Collection', component: CollectionPage }
-    ];
+  this.initializeApp();
+  events.subscribe('user:login', (user)=>{
+    this.user = user;
+    console.log(this.user)
+  })
+
+  events.subscribe('user:alreadyLogin', (user)=>{
+    this.user = user;
+    console.log(this.user)
+  })
+
+  // used for an example of ngFor and navigation
+  this.pages = [
+    // { title: 'Home', component: HomePage },
+    { title: 'Collection', component: CollectionPage }
+  ];
 
   }
 
@@ -49,6 +66,9 @@ export class MyApp {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
+  }
+
+  editProfile(){
   }
 
   logout(){

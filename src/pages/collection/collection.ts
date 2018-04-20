@@ -13,6 +13,7 @@ import { ItemDetailsPage } from '../item-details/item-details';
 // Provider Imports
 import { AuthProvider } from '../../providers/auth/auth';
 import { CollectionProvider } from '../../providers/collection/collection';
+import { UserProvider } from '../../providers/user/user';
 
 
 
@@ -34,6 +35,7 @@ export class CollectionPage {
   collectionItems: any;
   loading: any;
   userId: any;
+  public userProfile: any;
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
@@ -42,14 +44,17 @@ export class CollectionPage {
               public loadingCtrl: LoadingController,
               public authProvider: AuthProvider,
               public collectionProvider: CollectionProvider,
+              public userProvider: UserProvider,
               public storage: Storage) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CollectionPage');
-
     this.showLoader();
+    this.getCollection();
+  }
 
+  getCollection(){
     this.storage.get('userId').then((value) =>{
       this.userId = value
       this.collectionProvider.getCollection(value).then((data)=>{
@@ -59,9 +64,7 @@ export class CollectionPage {
       }).catch(error=>{
         console.log("Not Authorized")
       })
-
     })
-    
   }
 
   goToItemCreate(){
@@ -75,11 +78,7 @@ export class CollectionPage {
 
   deleteItem(item){
     this.showLoader();
-
     console.log(item._id)
-
-    
-
     this.collectionProvider.deleteItem(this.userId, item._id).then((result)=>{
       this.loading.dismiss();
 
