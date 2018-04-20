@@ -64,7 +64,7 @@ export class ItemEditPage {
         // this.viewCtrl.dismiss();    
         console.log(details.title + " edited!")
         console.log(result)
-        this.navCtrl.push(CollectionPage)
+        this.navCtrl.setRoot(CollectionPage)
       }).catch(error=>{
         this.loading.dismiss();
         console.log(error)

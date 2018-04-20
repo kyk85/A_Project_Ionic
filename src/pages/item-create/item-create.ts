@@ -64,7 +64,7 @@ export class ItemCreatePage {
         // this.viewCtrl.dismiss();    
         console.log(details.title + " added!")
         console.log(result)
-        this.navCtrl.push(CollectionPage)
+        this.navCtrl.setRoot(CollectionPage)
       }).catch(error=>{
         this.loading.dismiss();
         console.log(error)
